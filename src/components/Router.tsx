@@ -1,6 +1,7 @@
 import { MemberProvider } from '@/integrations';
 import { createBrowserRouter, RouterProvider, Navigate, Outlet } from 'react-router-dom';
 import { ScrollToTop } from '@/lib/scroll-to-top';
+import PageTransition from '@/components/PageTransition';
 import ErrorPage from '@/integrations/errorHandlers/ErrorPage';
 import HomePage from '@/components/pages/HomePage';
 import ProductsPage from '@/components/pages/ProductsPage';
@@ -10,11 +11,12 @@ import PortfolioPage from '@/components/pages/PortfolioPage';
 import AboutPage from '@/components/pages/AboutPage';
 import ContactPage from '@/components/pages/ContactPage';
 
-// Layout component that includes ScrollToTop
+// Layout component that includes ScrollToTop and PageTransition
 function Layout() {
   return (
     <>
       <ScrollToTop />
+      <PageTransition />
       <Outlet />
     </>
   );
