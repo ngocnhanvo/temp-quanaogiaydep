@@ -220,7 +220,7 @@ data_products.map(product => {
       title: `${companyName[p] || 'Vibe Code Studio'} - The Fusion of AI and Experts`,
       action: 'ProductDetailPage',
       description: `${product.itemDescription[p] || 'Sản phẩm'}`,
-      ogImage: product.itemImage[p],
+      ogImage: product.itemImage[p].src,
       header: false
     });
   });

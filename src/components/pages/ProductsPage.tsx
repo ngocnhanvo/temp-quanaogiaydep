@@ -16,7 +16,6 @@ export default function ProductsPage(props: AppRouterProps) {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const dt_products = props.data_products;
-  console.log(`dtpd`, dt_products);
   // Dữ liệu mẫu cho sản phẩm, re-evaluate khi ngôn ngữ thay đổi
   const sampleProducts: Products[] = useMemo(() => dt_products, [language, props]); // Dependencies for useMemo
 
@@ -224,12 +223,17 @@ export default function ProductsPage(props: AppRouterProps) {
                       >
                         <div className="relative h-[400px] mb-4 overflow-hidden bg-secondary">
                           {product.itemImage && (
-                            <Image
-                              src={product.itemImage[language]}
-                              alt={product.itemName[language] || 'Product'}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                              width={400}
+                            <picture>
+                            <source 
+                              srcSet={product.itemImage[language].srcSet} type="image/webp" 
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                             />
+                            <img 
+                              src={product.itemImage[language].src}
+                              alt={product.itemName[language]} 
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                            </picture>
                           )}
                         </div>
                       </Link>

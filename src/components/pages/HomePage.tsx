@@ -45,7 +45,7 @@ export default function HomePage(props: AppRouterProps) {
   return (
     <div className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground font-paragraph text-primary overflow-clip">
       <Header {...props} />
-
+      <main>
       {/* 
         HERO SECTION 
         Inspired by the provided image: Massive typography dominating the top, 
@@ -333,7 +333,7 @@ export default function HomePage(props: AppRouterProps) {
           </motion.div>
         </div>
       </section>
-
+      </main>
       <Footer {...props} />
     </div>
   );

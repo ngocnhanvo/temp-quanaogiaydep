@@ -119,11 +119,18 @@ export default function ProductDetailPage(props: AppRouterProps) {
               className="relative aspect-[3/4] bg-secondary overflow-hidden group"
             >
               {product.itemImage && (
-                <Image
-                  src={product.itemImage[language]}
-                  alt={product.itemName[language]}
+                <picture>
+                <source 
+                  srcSet={product.itemImage[language].srcSet} type="image/webp" 
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                
+                <img 
+                  src={product.itemImage[language].src}
+                  alt={product.itemName[language]} 
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
+              </picture>
               )}
             </motion.div>
 

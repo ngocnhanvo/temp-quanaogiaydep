@@ -17,7 +17,7 @@ export interface Products {
   slugP?: Record<string, string>;
   itemPrice?: Record<string, number>;
   itemCurrency?: Record<string, string>;
-  itemImage?: Record<string, string>;
+  itemImage?: Record<string, ProcessedImageResult>;
   itemDescription?: Record<string, string>;
   category?: Record<string, string>;
   quantity?: number;

@@ -55,20 +55,19 @@ export async function getProducts(infoData: WPInfo, pages: Pages[], isPreview: b
     });
     // Xử lý lưu ảnh static cho tất cả template đã gom nhóm
     return await Promise.all(Object.values(unifiedPages).map(async (p: any): Promise<Products> => {
-      if (p.image) {
-        for (const id of Object.keys(p.image)) {
+      if (p.itemImage) {
+        for (const id of Object.keys(p.itemImage)) {
           const store = await processAndStoreImage({
-            imageUrl: p.image[id],
+            imageUrl: p.itemImage[id],
             wcUrl: WC_URL,
             publicDirBase: 'images/products', // Lưu vào thư mục riêng cho sản phẩm
             isPreview: isPreview, // Truyền trạng thái preview
           });
-          p.image[id] = store;
+          p.itemImage[id] = store;
         }
       }
       return p;
     }));
-    
   } catch (error) {
     console.error(`❌ LỖI fetch Products:`, error);
     // Trả về đối tượng rỗng để tránh lỗi undefined trong các component React
