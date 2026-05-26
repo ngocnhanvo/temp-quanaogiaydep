@@ -2,11 +2,14 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
-import { ContactSubmissions } from '@/entities';
+import { ContactSubmissions, AppRouterProps } from '@/entities';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { useLanguage } from '@/lib/LanguageContext';
+import { getTranslation } from '@/lib/i18n';
 
-export default function ContactPage() {
+export default function ContactPage(props: AppRouterProps) {
+  const { language } = useLanguage();
   const [formData, setFormData] = useState({
     customerName: '',
     emailAddress: '',
@@ -55,7 +58,7 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header {...props}/>
 
       {/* Hero Section */}
       <section className="w-full bg-secondary py-16">
@@ -67,10 +70,10 @@ export default function ContactPage() {
             className="text-center space-y-4"
           >
             <h1 className="font-heading text-5xl md:text-6xl text-secondary-foreground">
-              Liên hệ
+              {getTranslation('contact.hero.title', language, props)}
             </h1>
             <p className="font-paragraph text-xl text-secondary-foreground max-w-2xl mx-auto">
-              Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn
+              {getTranslation('contact.hero.subtitle', language, props)}
             </p>
           </motion.div>
         </div>
@@ -88,10 +91,10 @@ export default function ContactPage() {
           >
             <div>
               <h2 className="font-heading text-3xl md:text-4xl text-primary mb-6">
-                Thông tin liên hệ
+                {getTranslation('contact.infoTitle', language, props)}
               </h2>
               <p className="font-paragraph text-lg text-primary leading-relaxed">
-                Hãy để lại thông tin của bạn, chúng tôi sẽ liên hệ lại trong thời gian sớm nhất.
+                {getTranslation('contact.subtitle', language, props)}
               </p>
             </div>
 
@@ -102,11 +105,10 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-heading text-xl text-primary mb-2">
-                    Địa chỉ
+                    {getTranslation('contact.addressLabel', language, props)}
                   </h3>
                   <p className="font-paragraph text-base text-primary">
-                    123 Đường Thời Trang, Quận 1<br />
-                    Thành phố Hồ Chí Minh, Việt Nam
+                    {getTranslation('footer.address', language, props)}
                   </p>
                 </div>
               </div>
@@ -117,14 +119,14 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-heading text-xl text-primary mb-2">
-                    Điện thoại
+                    {getTranslation('contact.phoneLabel', language, props)}
                   </h3>
                   <a
-                    href="tel:+84123456789"
+                    href={`tel:${getTranslation('footer.phone', language, props)}`}
                     className="font-paragraph text-base text-linkcolor hover:text-primary transition-colors"
                   >
-                    +84 123 456 789
                   </a>
+                    {getTranslation('footer.phoneTxt', language, props)}
                 </div>
               </div>
 
@@ -134,26 +136,26 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-heading text-xl text-primary mb-2">
-                    Email
+                    {getTranslation('contact.emailLabel', language, props)}
                   </h3>
                   <a
-                    href="mailto:info@thoitrang.com"
+                    href={`mailto:${getTranslation('footer.email', language, props)}`}
                     className="font-paragraph text-base text-linkcolor hover:text-primary transition-colors"
                   >
-                    info@thoitrang.com
                   </a>
+                    {getTranslation('footer.emailTxt', language, props)}
                 </div>
               </div>
             </div>
 
             <div className="pt-6">
               <h3 className="font-heading text-xl text-primary mb-4">
-                Giờ làm việc
+                {getTranslation('contact.workingHours', language, props)}
               </h3>
               <div className="space-y-2 font-paragraph text-base text-primary">
-                <p>Thứ Hai - Thứ Sáu: 9:00 - 18:00</p>
-                <p>Thứ Bảy: 9:00 - 17:00</p>
-                <p>Chủ Nhật: Nghỉ</p>
+                <p>{getTranslation('contact.weekdays', language, props)}</p>
+                <p>{getTranslation('contact.saturday', language, props)}</p>
+                <p>{getTranslation('contact.sunday', language, props)}</p>
               </div>
             </div>
           </motion.div>
@@ -167,7 +169,7 @@ export default function ContactPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="customerName" className="block font-paragraph text-base text-primary mb-2">
-                  Họ và tên *
+                  {getTranslation('contact.formName', language, props)}
                 </label>
                 <input
                   type="text"
@@ -177,13 +179,13 @@ export default function ContactPage() {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border border-buttonborder bg-background text-primary font-paragraph text-base focus:outline-none focus:border-primary transition-colors"
-                  placeholder="Nhập họ và tên của bạn"
+                  placeholder={getTranslation('contact.placeholderName', language, props)}
                 />
               </div>
 
               <div>
                 <label htmlFor="emailAddress" className="block font-paragraph text-base text-primary mb-2">
-                  Email *
+                  {getTranslation('contact.formEmail', language, props)}
                 </label>
                 <input
                   type="email"
@@ -193,13 +195,13 @@ export default function ContactPage() {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border border-buttonborder bg-background text-primary font-paragraph text-base focus:outline-none focus:border-primary transition-colors"
-                  placeholder="email@example.com"
+                  placeholder={getTranslation('contact.placeholderEmail', language, props)}
                 />
               </div>
 
               <div>
                 <label htmlFor="phoneNumber" className="block font-paragraph text-base text-primary mb-2">
-                  Số điện thoại
+                  {getTranslation('contact.formPhone', language, props)}
                 </label>
                 <input
                   type="tel"
@@ -208,13 +210,13 @@ export default function ContactPage() {
                   value={formData.phoneNumber}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-buttonborder bg-background text-primary font-paragraph text-base focus:outline-none focus:border-primary transition-colors"
-                  placeholder="+84 123 456 789"
+                  placeholder={getTranslation('contact.placeholderPhone', language, props)}
                 />
               </div>
 
               <div>
                 <label htmlFor="messageContent" className="block font-paragraph text-base text-primary mb-2">
-                  Nội dung *
+                  {getTranslation('contact.formMessage', language, props)}
                 </label>
                 <textarea
                   id="messageContent"
@@ -224,13 +226,13 @@ export default function ContactPage() {
                   required
                   rows={6}
                   className="w-full px-4 py-3 border border-buttonborder bg-background text-primary font-paragraph text-base focus:outline-none focus:border-primary transition-colors resize-none"
-                  placeholder="Nhập nội dung tin nhắn của bạn..."
+                  placeholder={getTranslation('contact.placeholderMessage', language, props)}
                 />
               </div>
 
               {submitSuccess && (
                 <div className="p-4 bg-secondary text-secondary-foreground font-paragraph text-base">
-                  Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.
+                  {getTranslation('contact.success', language, props)}
                 </div>
               )}
 
@@ -240,10 +242,10 @@ export default function ContactPage() {
                 className="w-full py-4 bg-primary text-primary-foreground font-paragraph text-base hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
-                  'Đang gửi...'
+                  getTranslation('contact.sending', language, props)
                 ) : (
                   <>
-                    Gửi tin nhắn
+                    {getTranslation('contact.sendButton', language, props)}
                     <Send className="w-5 h-5" />
                   </>
                 )}
@@ -253,7 +255,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <Footer />
+      <Footer {...props}/>
     </div>
   );
 }

@@ -3,52 +3,56 @@ import { Award, Users, Heart, Target } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { AppRouterProps } from '@/entities';
+import { useLanguage } from '@/lib/LanguageContext';
+import { getTranslation } from '@/lib/i18n';
 
-export default function AboutPage() {
+export default function AboutPage(props: AppRouterProps) {
+  const { language } = useLanguage();
   const values = [
     {
       icon: Award,
-      title: 'Chất lượng',
-      description: 'Cam kết mang đến những sản phẩm chất lượng cao nhất với thiết kế tinh tế và chất liệu tốt nhất.'
+      title: getTranslation('abt.values.q.title', language, props),
+      description: getTranslation('abt.values.q.desc', language, props)
     },
     {
       icon: Users,
-      title: 'Khách hàng',
-      description: 'Đặt khách hàng làm trung tâm, luôn lắng nghe và đáp ứng nhu cầu của từng cá nhân.'
+      title: getTranslation('abt.values.c.title', language, props),
+      description: getTranslation('abt.values.c.desc', language, props)
     },
     {
       icon: Heart,
-      title: 'Đam mê',
-      description: 'Tình yêu với thời trang và nghệ thuật thúc đẩy chúng tôi không ngừng sáng tạo và đổi mới.'
+      title: getTranslation('abt.values.p.title', language, props),
+      description: getTranslation('abt.values.p.desc', language, props)
     },
     {
       icon: Target,
-      title: 'Tầm nhìn',
-      description: 'Trở thành thương hiệu thời trang hàng đầu, mang phong cách hiện đại đến với mọi người.'
+      title: getTranslation('abt.values.v.title', language, props),
+      description: getTranslation('abt.values.v.desc', language, props)
     }
   ];
 
   const team = [
     {
-      name: 'Nguyễn Văn A',
-      role: 'Giám đốc sáng tạo',
-      description: 'Với hơn 15 năm kinh nghiệm trong ngành thời trang'
+      name: getTranslation('abt.team.m1.name', language, props),
+      role: getTranslation('abt.team.m1.role', language, props),
+      description: getTranslation('abt.team.m1.desc', language, props)
     },
     {
-      name: 'Trần Thị B',
-      role: 'Giám đốc thiết kế',
-      description: 'Chuyên gia thiết kế với tầm nhìn quốc tế'
+      name: getTranslation('abt.team.m2.name', language, props),
+      role: getTranslation('abt.team.m2.role', language, props),
+      description: getTranslation('abt.team.m2.desc', language, props)
     },
     {
-      name: 'Lê Văn C',
-      role: 'Giám đốc vận hành',
-      description: 'Đảm bảo chất lượng và quy trình sản xuất hoàn hảo'
+      name: getTranslation('abt.team.m3.name', language, props),
+      role: getTranslation('abt.team.m3.role', language, props),
+      description: getTranslation('abt.team.m3.desc', language, props)
     }
   ];
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header {...props} />
 
       {/* Hero Section */}
       <section className="w-full max-w-[120rem] mx-auto min-h-[80vh] flex items-center px-8 md:px-16 lg:px-24 py-16">
@@ -60,13 +64,13 @@ export default function AboutPage() {
             className="space-y-6"
           >
             <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl text-primary">
-              Về chúng tôi
+              {getTranslation('abt.title', language, props)}
             </h1>
             <p className="font-paragraph text-xl text-primary leading-relaxed">
-              Chúng tôi là một thương hiệu thời trang cao cấp, chuyên cung cấp những sản phẩm quần áo và giày dép chất lượng với thiết kế tinh tế, hiện đại.
+              {getTranslation('abt.hero.desc1', language, props)}
             </p>
             <p className="font-paragraph text-lg text-primary leading-relaxed">
-              Được thành lập với niềm đam mê và tâm huyết, chúng tôi tin rằng thời trang không chỉ là trang phục mà còn là cách thể hiện cá tính và phong cách sống của mỗi người.
+              {getTranslation('abt.hero.desc2', language, props)}
             </p>
           </motion.div>
 
@@ -97,10 +101,10 @@ export default function AboutPage() {
             className="text-center max-w-3xl mx-auto space-y-6"
           >
             <h2 className="font-heading text-4xl md:text-5xl text-secondary-foreground">
-              Sứ mệnh của chúng tôi
+              {getTranslation('abt.mission.title', language, props)}
             </h2>
             <p className="font-paragraph text-xl text-secondary-foreground leading-relaxed">
-              Mang đến cho khách hàng những trải nghiệm mua sắm đẳng cấp với sản phẩm chất lượng cao, thiết kế độc đáo và dịch vụ tận tâm. Chúng tôi không ngừng sáng tạo để đáp ứng nhu cầu và phong cách của từng cá nhân.
+              {getTranslation('abt.mission.desc', language, props)}
             </p>
           </motion.div>
         </div>
@@ -116,10 +120,10 @@ export default function AboutPage() {
           className="text-center mb-16"
         >
           <h2 className="font-heading text-4xl md:text-5xl text-primary mb-4">
-            Giá trị cốt lõi
+            {getTranslation('abt.values.title', language, props)}
           </h2>
           <p className="font-paragraph text-lg text-primary max-w-2xl mx-auto">
-            Những giá trị định hướng mọi hoạt động của chúng tôi
+            {getTranslation('abt.values.subtitle', language, props)}
           </p>
         </motion.div>
 
@@ -158,10 +162,10 @@ export default function AboutPage() {
             className="text-center mb-16"
           >
             <h2 className="font-heading text-4xl md:text-5xl text-secondary-foreground mb-4">
-              Đội ngũ của chúng tôi
+            {getTranslation('abt.team.title', language, props)}
             </h2>
             <p className="font-paragraph text-lg text-secondary-foreground max-w-2xl mx-auto">
-              Những con người tài năng và tâm huyết đằng sau thương hiệu
+            {getTranslation('abt.team.subtitle', language, props)}
             </p>
           </motion.div>
 
@@ -202,9 +206,9 @@ export default function AboutPage() {
       <section className="w-full max-w-[100rem] mx-auto px-8 md:px-16 lg:px-24 py-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {[
-            { number: '10+', label: 'Năm kinh nghiệm' },
-            { number: '5000+', label: 'Khách hàng hài lòng' },
-            { number: '50+', label: 'Bộ sưu tập' }
+            { number: '10+', label: getTranslation('abt.stats.exp.label', language, props) },
+            { number: '5000+', label: getTranslation('abt.stats.cust.label', language, props) },
+            { number: '50+', label: getTranslation('abt.stats.coll.label', language, props) }
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -225,7 +229,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <Footer />
+      <Footer {...props} />
     </div>
   );
 }

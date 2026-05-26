@@ -3,15 +3,18 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, User, ArrowLeft } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
-import { Bivit } from '@/entities';
+import { Bivit, AppRouterProps } from '@/entities';
 import { Image } from '@/components/ui/image';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { format } from 'date-fns';
-import { vi } from 'date-fns/locale';
+import { vi, enUS } from 'date-fns/locale';
+import { useLanguage } from '@/lib/LanguageContext';
+import { getTranslation } from '@/lib/i18n';
 
-export default function BlogDetailPage() {
+export default function BlogDetailPage(props: AppRouterProps) {
+  const { language } = useLanguage();
   const { id } = useParams<{ id: string }>();
   const [article, setArticle] = useState<Bivit | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -37,7 +40,8 @@ export default function BlogDetailPage() {
   const formatDate = (date: Date | string | undefined) => {
     if (!date) return '';
     try {
-      return format(new Date(date), 'dd MMMM yyyy', { locale: vi });
+      const locale = language === 'vi' ? vi : enUS;
+      return format(new Date(date), 'dd MMMM yyyy', { locale });
     } catch {
       return '';
     }
@@ -45,7 +49,7 @@ export default function BlogDetailPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header {...props} />
 
       <div className="w-full max-w-[100rem] mx-auto px-8 md:px-16 lg:px-24 py-16">
         <div className="min-h-[600px]">
@@ -56,12 +60,12 @@ export default function BlogDetailPage() {
           ) : !article ? (
             <div className="text-center py-20 space-y-6">
               <h2 className="font-heading text-3xl text-primary">
-                Không tìm thấy bài viết
+                {getTranslation('blog.detail.notFound', language, props)}
               </h2>
               <Link to="/blog">
                 <button className="px-8 py-4 border border-buttonborder text-primary font-paragraph text-base hover:bg-primary hover:text-primary-foreground transition-colors inline-flex items-center gap-2">
                   <ArrowLeft className="w-5 h-5" />
-                  Quay lại Blog
+                  {getTranslation('blog.detail.back', language, props)}
                 </button>
               </Link>
             </div>
@@ -78,7 +82,7 @@ export default function BlogDetailPage() {
                 className="inline-flex items-center gap-2 font-paragraph text-base text-linkcolor hover:text-primary transition-colors mb-8"
               >
                 <ArrowLeft className="w-5 h-5" />
-                Quay lại Blog
+                {getTranslation('blog.detail.back', language, props)}
               </Link>
 
               {/* Article Header */}
@@ -129,7 +133,7 @@ export default function BlogDetailPage() {
               {/* Share Section */}
               <div className="mt-16 pt-8 border-t border-primary/10">
                 <p className="font-paragraph text-base text-primary/60 text-center">
-                  Chia sẻ bài viết này với bạn bè
+                  {getTranslation('blog.detail.share', language, props)}
                 </p>
               </div>
             </motion.article>
@@ -137,7 +141,7 @@ export default function BlogDetailPage() {
         </div>
       </div>
 
-      <Footer />
+      <Footer {...props} />
     </div>
   );
 }

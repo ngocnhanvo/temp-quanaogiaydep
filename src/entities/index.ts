@@ -2,11 +2,59 @@
  * Auto-generated entity types
  * Contains all CMS collection interfaces in a single file 
  */
+export interface ProcessedImageResult {
+  src: string;     // Đường dẫn ảnh mặc định (bản lớn nhất hoặc ảnh gốc)
+  srcSet: string;
+  srcSets: {};   // Chuỗi srcSet chứa nhiều kích thước phục vụ responsive
+}
 
-/**
- * Collection ID: articles
- * Interface for Bivit
- */
+export interface Products {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  itemName?: Record<string, string>;
+  slug?: Record<string, string>;
+  itemPrice?: Record<string, number>;
+  itemCurrency?: Record<string, string>;
+  itemImage?: Record<string, string>;
+  itemDescription?: Record<string, string>;
+  category?: Record<string, string>;
+  quantity?: number;
+  collectionId?: string;
+}
+
+export interface Portfolios {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  projectTitle?: string;
+  /** @wixFieldType text */
+  description?: string;
+  /** @wixFieldType image - Contains image URL, render with <Image> component, NOT as text */
+  galleryImages?: string;
+  /** @wixFieldType date */
+  completionDate?: Date | string;
+  /** @wixFieldType text */
+  season?: string;
+}
+
+export interface ContactSubmissions {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  customerName?: string;
+  /** @wixFieldType text */
+  emailAddress?: string;
+  /** @wixFieldType text */
+  phoneNumber?: string;
+  /** @wixFieldType text */
+  messageContent?: string;
+  /** @wixFieldType datetime */
+  submissionDate?: Date | string;
+}
+
 export interface Bivit {
   _id: string;
   _createdDate?: Date;
@@ -23,12 +71,76 @@ export interface Bivit {
   publicationDate?: Date | string;
 }
 
+export interface Pages {
+  key: string,
+  id?: string, 
+  lang: string,
+  slug: string,
+  title: string,
+  label: string,
+  action: string,
+  description: string,
+  ogImage?: string,
+  header?: boolean
+}
+
+export interface AppRouterProps {
+  basename?: string;
+  pages: Pages[];
+  data_info?: WPInfo;
+  data_pages?: WPPage[];
+  data_products?: Products[];
+}
+
+export interface WPPage {
+  id?: number;
+  name?: string;
+  slug?: Record<string, string>;
+  title?: Record<string, string>;
+  content?: Record<string, string>;
+  image?: Record<string, ProcessedImageResult>;
+  description?: Record<string, string>;
+  order?: number;
+}
+
+export interface WPInfo {
+  id: number;
+  tencongty?: Record<string, string>;
+  diachi?: Record<string, string>;
+  googlemap?: string;
+  sodienthoai?: string;
+  email?: string;
+  domain?: string;
+  logo?: ProcessedImageResult;
+  favicon?: ProcessedImageResult;
+  image?: ProcessedImageResult;
+}
+
+export interface Articles {
+  _id: string;
+  lang: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  title?: string;
+  /** @wixFieldType text */
+  summary?: string;
+  /** @wixFieldType text */
+  content?: string;
+  /** @wixFieldType text */
+  authorName?: string;
+  /** @wixFieldType date */
+  publishDate?: Date | string;
+  /** @wixFieldType image - Contains image URL, render with <Image> component, NOT as text */
+  coverImage?: string;
+}
+
 
 /**
- * Collection ID: contactsubmissions
- * Interface for ContactSubmissions
+ * Collection ID: contactmessages
+ * Interface for ContactMessages
  */
-export interface ContactSubmissions {
+export interface ContactMessages {
   _id: string;
   _createdDate?: Date;
   _updatedDate?: Date;
@@ -46,47 +158,53 @@ export interface ContactSubmissions {
 
 
 /**
- * Collection ID: portfolios
- * Interface for Portfolios
+ * Collection ID: corevalues
+ * Interface for CoreValues
  */
-export interface Portfolios {
+export interface CoreValues {
   _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  valueTitle?: string;
+  /** @wixFieldType text */
+  description?: string;
+  /** @wixFieldType image - Contains image URL, render with <Image> component, NOT as text */
+  valueImage?: string;
+  /** @wixFieldType number */
+  displayOrder?: number;
+  /** @wixFieldType text */
+  slogan?: string;
+}
+
+
+/**
+ * Collection ID: projects
+ * Interface for Projects
+ */
+export interface Projects {
+  _id: string;
+  lang: string;
   _createdDate?: Date;
   _updatedDate?: Date;
   /** @wixFieldType text */
   projectTitle?: string;
   /** @wixFieldType text */
   description?: string;
-  /** @wixFieldType image - Contains image URL, render with <Image> component, NOT as text */
-  galleryImages?: string;
+  /** @wixFieldType text */
+  clientName?: string;
   /** @wixFieldType date */
   completionDate?: Date | string;
-  /** @wixFieldType text */
-  season?: string;
-}
-
-
-/**
- * Collection ID: products
- * @catalog This collection is an eCommerce catalog
- * Interface for Products
- */
-export interface Products {
-  _id: string;
-  _createdDate?: Date;
-  _updatedDate?: Date;
-  /** @wixFieldType text */
-  itemName?: string;
-  /** @wixFieldType number */
-  itemPrice?: number;
   /** @wixFieldType image - Contains image URL, render with <Image> component, NOT as text */
-  itemImage?: string;
+  mainImage?: string;
+  /** @wixFieldType image - Contains image URL, render with <Image> component, NOT as text */
+  projectImage2?: string;
+  /** @wixFieldType image - Contains image URL, render with <Image> component, NOT as text */
+  projectImage3?: string;
+  /** @wixFieldType url */
+  projectUrl?: string;
   /** @wixFieldType text */
-  itemDescription?: string;
+  industry?: string;
   /** @wixFieldType text */
-  size?: string;
-  /** @wixFieldType text */
-  color?: string;
-  /** @wixFieldType text */
-  category?: string;
+  keyAchievements?: string;
 }

@@ -3,14 +3,17 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, User, ArrowRight } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
-import { Bivit } from '@/entities';
+import { Bivit, AppRouterProps } from '@/entities';
 import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { format } from 'date-fns';
-import { vi } from 'date-fns/locale';
+import { vi, enUS } from 'date-fns/locale';
+import { useLanguage } from '@/lib/LanguageContext';
+import { getTranslation } from '@/lib/i18n';
 
-export default function BlogPage() {
+export default function BlogPage(props: AppRouterProps) {
+  const { language } = useLanguage();
   const [articles, setArticles] = useState<Bivit[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasNext, setHasNext] = useState(false);
@@ -43,7 +46,8 @@ export default function BlogPage() {
   const formatDate = (date: Date | string | undefined) => {
     if (!date) return '';
     try {
-      return format(new Date(date), 'dd MMMM yyyy', { locale: vi });
+      const locale = language === 'vi' ? vi : enUS;
+      return format(new Date(date), 'dd MMMM yyyy', { locale });
     } catch {
       return '';
     }
@@ -55,7 +59,7 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header {...props} />
 
       {/* Hero Section */}
       <section className="w-full bg-secondary py-16">
@@ -67,10 +71,10 @@ export default function BlogPage() {
             className="text-center space-y-4"
           >
             <h1 className="font-heading text-5xl md:text-6xl text-secondary-foreground">
-              Blog & Xu hướng
+              {getTranslation('blog.hero.title', language, props)}
             </h1>
             <p className="font-paragraph text-xl text-secondary-foreground max-w-2xl mx-auto">
-              Khám phá những bài viết mới nhất về thời trang và phong cách
+              {getTranslation('blog.hero.subtitle', language, props)}
             </p>
           </motion.div>
         </div>
@@ -84,7 +88,7 @@ export default function BlogPage() {
               {articles.length === 0 ? (
                 <div className="text-center py-20">
                   <p className="font-paragraph text-xl text-primary">
-                    Chưa có bài viết nào
+                    {getTranslation('blog.noArticles', language, props)}
                   </p>
                 </div>
               ) : (
@@ -149,7 +153,7 @@ export default function BlogPage() {
                           to={`/blog/${article._id}`}
                           className="font-paragraph text-base text-linkcolor hover:text-primary transition-colors inline-flex items-center gap-2 pt-2"
                         >
-                          Đọc thêm
+                          {getTranslation('blog.readMore', language, props)}
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       </div>
@@ -166,7 +170,7 @@ export default function BlogPage() {
                     disabled={isLoading}
                     className="px-10 py-4 border border-buttonborder text-primary font-paragraph text-base hover:bg-primary hover:text-primary-foreground transition-colors disabled:opacity-50"
                   >
-                    {isLoading ? 'Đang tải...' : 'Xem thêm'}
+                    {isLoading ? getTranslation('blog.loading', language, props) : getTranslation('blog.loadMore', language, props)}
                   </button>
                 </div>
               )}
@@ -175,7 +179,7 @@ export default function BlogPage() {
         </div>
       </section>
 
-      <Footer />
+      <Footer {...props} />
     </div>
   );
 }

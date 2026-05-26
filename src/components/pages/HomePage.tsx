@@ -1,13 +1,19 @@
 // HPI 1.7-V
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, MoveRight } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { AppRouterProps } from '@/entities';
+import { getTranslation, getContent } from '@/lib/i18n';
+import { useLanguage } from '@/lib/LanguageContext';
+import { handlePageLink } from '../PageTransition';
 
-export default function HomePage() {
+export default function HomePage(props: AppRouterProps) {
+  const { language } = useLanguage();
+  const navigate = useNavigate();
   // Canonical Data Sources preserved from original code
   const featuredProducts = [1, 2, 3];
   const latestArticles = [1, 2];
@@ -31,10 +37,14 @@ export default function HomePage() {
     offset: ["start end", "end start"],
   });
   const aboutImageY = useTransform(aboutScroll, [0, 1], ["-15%", "15%"]);
+  const link_products = getContent(props.pages, 'products', language);
+  const link_about = getContent(props.pages, 'about', language);
+  const link_blogs = getContent(props.pages, 'blogs', language);
+  const link_contact = getContent(props.pages, 'contact', language);
 
   return (
     <div className="min-h-screen bg-background selection:bg-primary selection:text-primary-foreground font-paragraph text-primary overflow-clip">
-      <Header />
+      <Header {...props} />
 
       {/* 
         HERO SECTION 
@@ -54,14 +64,14 @@ export default function HomePage() {
             className="space-y-6 max-w-5xl mx-auto"
           >
             <h1 className="font-heading text-[12vw] leading-[0.85] tracking-tight text-primary uppercase">
-              Thời Trang
+              {getTranslation('hp.hero.title', language, props)}
             </h1>
             <div className="flex flex-col items-center gap-8 mt-8">
               <p className="font-paragraph text-lg md:text-2xl text-primary/80 max-w-2xl font-light tracking-wide">
-                Tinh tế trong từng đường nét, sang trọng trong từng chi tiết. Nghệ thuật thủ công đương đại.
+                {getTranslation('hp.hero.subtitle', language, props)}
               </p>
-              <Link to="/products" className="group inline-flex items-center gap-3 border-b border-primary pb-1 hover:border-transparent transition-colors duration-300">
-                <span className="text-sm uppercase tracking-[0.2em] font-semibold">Khám phá bộ sưu tập</span>
+              <Link onClick={(e) => handlePageLink(e, link_products, navigate)} to={link_products} className="group inline-flex items-center gap-3 border-b border-primary pb-1 hover:border-transparent transition-colors duration-300">
+                <span className="text-sm uppercase tracking-[0.2em] font-semibold">{getTranslation('hp.hero.discover', language, props)}</span>
                 <MoveRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
               </Link>
             </div>
@@ -102,21 +112,21 @@ export default function HomePage() {
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8 }}
               >
-                <h2 className="font-heading text-5xl lg:text-7xl text-secondary-foreground leading-tight">
-                  Nghệ thuật<br />thời trang
+                <h2 className="font-heading text-5xl lg:text-7xl text-secondary-foreground leading-tight whitespace-pre-line">
+                  {getTranslation('hp.about.title', language, props)}
                 </h2>
                 <div className="w-12 h-[1px] bg-secondary-foreground mt-8 mb-8" />
                 <p className="font-paragraph text-lg lg:text-xl text-secondary-foreground/80 leading-relaxed mb-6">
-                  Chúng tôi tin rằng thời trang không chỉ là trang phục, mà là cách thể hiện cá tính và phong cách sống. Mỗi sản phẩm được chọn lọc kỹ lưỡng, kết hợp giữa chất lượng vượt trội và thiết kế tinh tế.
+                  {getTranslation('hp.about.desc1', language, props)}
                 </p>
                 <p className="font-paragraph text-lg lg:text-xl text-secondary-foreground/80 leading-relaxed">
-                  Với đội ngũ chuyên gia am hiểu xu hướng và tâm huyết với nghề, chúng tôi mang đến những trải nghiệm mua sắm đẳng cấp cho khách hàng.
+                  {getTranslation('hp.about.desc2', language, props)}
                 </p>
                 
                 <div className="mt-12">
-                  <Link to="/about">
+                  <Link onClick={(e) => handlePageLink(e, link_about, navigate)} to={link_about}>
                     <button className="px-8 py-4 border border-secondary-foreground text-secondary-foreground font-paragraph text-sm uppercase tracking-widest hover:bg-secondary-foreground hover:text-secondary transition-colors duration-500">
-                      Tìm hiểu thêm
+                      {getTranslation('hp.about.btn', language, props)}
                     </button>
                   </Link>
                 </div>
@@ -156,10 +166,10 @@ export default function HomePage() {
               className="max-w-2xl"
             >
               <h2 className="font-heading text-5xl lg:text-6xl text-primary mb-6">
-                Sản phẩm nổi bật
+                {getTranslation('hp.products.title', language, props)}
               </h2>
               <p className="font-paragraph text-lg text-primary/70">
-                Khám phá những thiết kế độc đáo, kết hợp giữa phong cách hiện đại và chất lượng thủ công.
+                {getTranslation('hp.products.subtitle', language, props)}
               </p>
             </motion.div>
             
@@ -169,8 +179,8 @@ export default function HomePage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Link to="/products" className="group inline-flex items-center gap-3 text-primary">
-                <span className="text-sm uppercase tracking-[0.2em] font-semibold">Xem tất cả</span>
+              <Link onClick={(e) => handlePageLink(e, link_products, navigate)} to={link_products} className="group inline-flex items-center gap-3 text-primary">
+                <span className="text-sm uppercase tracking-[0.2em] font-semibold">{getTranslation('hp.products.viewAll', language, props)}</span>
                 <div className="w-8 h-[1px] bg-primary group-hover:w-12 transition-all duration-300" />
               </Link>
             </motion.div>
@@ -187,7 +197,7 @@ export default function HomePage() {
                 transition={{ duration: 0.8, delay: index * 0.15 }}
                 className={`group flex flex-col ${index === 1 ? 'lg:mt-32' : index === 2 ? 'lg:mt-16' : ''}`}
               >
-                <Link to="/products" className="block relative overflow-hidden aspect-[3/4] mb-6 bg-secondary/20">
+                <Link onClick={(e) => handlePageLink(e, link_products, navigate)} to={link_products} className="block relative overflow-hidden aspect-[3/4] mb-6 bg-secondary/20">
                   <Image
                     src="https://static.wixstatic.com/media/73be94_ff7f063e49904dab82bb04275c6c740e~mv2.png?originWidth=1152&originHeight=1600"
                     alt={`Featured product ${item}`}
@@ -200,10 +210,10 @@ export default function HomePage() {
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="font-heading text-2xl text-primary mb-2 group-hover:text-linkcolor transition-colors">
-                      Bộ sưu tập {item}
+                      {getTranslation('hp.products.collection', language, props)} {item}
                     </h3>
                     <p className="font-paragraph text-sm text-primary/60">
-                      Thiết kế tinh tế cho phong cách hiện đại
+                      {getTranslation('hp.products.itemDesc', language, props)}
                     </p>
                   </div>
                   <div className="w-8 h-8 rounded-full border border-primary/20 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
@@ -231,16 +241,16 @@ export default function HomePage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <span className="text-xs uppercase tracking-[0.3em] text-primary/50 mb-4 block">Editorial</span>
-              <h2 className="font-heading text-5xl lg:text-6xl text-primary mb-6 leading-tight">
-                Xu hướng &<br />Cảm hứng
+              <span className="text-xs uppercase tracking-[0.3em] text-primary/50 mb-4 block">{getTranslation('hp.blog.label', language, props)}</span>
+              <h2 className="font-heading text-5xl lg:text-6xl text-primary mb-6 leading-tight whitespace-pre-line">
+                {getTranslation('hp.blog.title', language, props)}
               </h2>
               <p className="font-paragraph text-lg text-primary/70 mb-12 max-w-sm">
-                Khám phá những bài viết mới nhất về thời trang, phong cách và xu hướng đương đại.
+                {getTranslation('hp.blog.subtitle', language, props)}
               </p>
-              <Link to="/blog">
+              <Link onClick={(e) => handlePageLink(e, link_blogs, navigate)} to={link_blogs}>
                 <button className="px-8 py-4 border border-buttonborder text-primary font-paragraph text-sm uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition-colors duration-500">
-                  Đọc tạp chí
+                  {getTranslation('hp.blog.btn', language, props)}
                 </button>
               </Link>
             </motion.div>
@@ -257,7 +267,7 @@ export default function HomePage() {
                 transition={{ duration: 0.8 }}
                 className="group cursor-pointer"
               >
-                <Link to="/blog" className="block">
+                <Link onClick={(e) => handlePageLink(e, link_blogs, navigate)} to={link_blogs} className="block">
                   <div className="relative overflow-hidden aspect-[16/9] lg:aspect-[21/9] mb-8">
                     <Image
                       src="https://static.wixstatic.com/media/73be94_cbbd7763fd6947789e61f62770ea0141~mv2.png?originWidth=1152&originHeight=512"
@@ -267,18 +277,18 @@ export default function HomePage() {
                   </div>
                   <div className="max-w-2xl">
                     <div className="flex items-center gap-4 mb-4 text-xs uppercase tracking-widest text-primary/50">
-                      <span>Thời trang</span>
+                      <span>{getTranslation('hp.blog.category', language, props)}</span>
                       <span className="w-1 h-1 rounded-full bg-primary/30" />
-                      <span>Đọc 5 phút</span>
+                      <span>{getTranslation('hp.blog.readTime', language, props)}</span>
                     </div>
                     <h3 className="font-heading text-3xl lg:text-4xl text-primary mb-4 group-hover:text-linkcolor transition-colors">
-                      Nghệ thuật phối đồ tinh tế cho phong cách hiện đại {item}
+                      {getTranslation('hp.blog.articleTitle', language, props)} {item}
                     </h3>
                     <p className="font-paragraph text-base text-primary/70 leading-relaxed mb-6">
-                      Khám phá những xu hướng mới nhất và cách kết hợp trang phục để tạo nên dấu ấn cá nhân độc đáo trong mùa này.
+                      {getTranslation('hp.blog.articleDesc', language, props)}
                     </p>
                     <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-primary group-hover:gap-4 transition-all duration-300">
-                      Đọc thêm <MoveRight className="w-4 h-4" />
+                      {getTranslation('hp.blog.readMore', language, props)} <MoveRight className="w-4 h-4" />
                     </span>
                   </div>
                 </Link>
@@ -307,16 +317,16 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="space-y-10"
           >
-            <h2 className="font-heading text-5xl md:text-7xl text-primary-foreground leading-tight">
-              Sẵn sàng khám phá<br />phong cách của bạn?
+            <h2 className="font-heading text-5xl md:text-7xl text-primary-foreground leading-tight whitespace-pre-line">
+              {getTranslation('hp.cta.title', language, props)}
             </h2>
             <p className="font-paragraph text-xl text-primary-foreground/80 max-w-2xl mx-auto font-light">
-              Liên hệ với chúng tôi để được tư vấn cá nhân hóa và trải nghiệm dịch vụ thời trang cao cấp.
+              {getTranslation('hp.cta.subtitle', language, props)}
             </p>
             <div className="pt-8">
-              <Link to="/contact">
+              <Link onClick={(e) => handlePageLink(e, link_contact, navigate)} to={link_contact}>
                 <button className="px-12 py-5 bg-primary-foreground text-primary font-paragraph text-sm uppercase tracking-[0.2em] font-semibold hover:bg-secondary hover:text-secondary-foreground transition-all duration-500">
-                  Liên hệ ngay
+                  {getTranslation('hp.cta.btn', language, props)}
                 </button>
               </Link>
             </div>
@@ -324,7 +334,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Footer />
+      <Footer {...props} />
     </div>
   );
 }

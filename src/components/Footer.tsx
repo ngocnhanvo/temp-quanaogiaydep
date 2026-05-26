@@ -1,7 +1,22 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
+import { useLanguage } from '@/lib/LanguageContext';
+import { getTranslation, getContent } from '@/lib/i18n';
+import { AppRouterProps } from '@/entities';
+import {handlePageLink}  from '@/components/PageTransition';
 
-export default function Footer() {
+export default function Footer(props: AppRouterProps) {
+  const { language } = useLanguage();
+  let link_home = getContent(props.pages, 'home', language);
+  let link_about = getContent(props.pages, 'about', language);
+  let link_contact = getContent(props.pages, 'contact', language);
+  let link_blogs = getContent(props.pages, 'blogs', language);
+  let link_products = getContent(props.pages, 'products', language);
+  let link_privacy = getContent(props.pages, 'privacy', language);
+  let link_terms = getContent(props.pages, 'terms', language);
+  let link_portfolio = getContent(props.pages, 'portfolio', language);
+  const navigate = useNavigate();
+
   return (
     <footer className="w-full bg-footerbackground">
       <div className="max-w-[100rem] mx-auto px-8 md:px-16 lg:px-24 py-16">
@@ -9,10 +24,10 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="space-y-4">
             <h3 className="font-heading text-2xl text-primary-foreground">
-              THỜI TRANG
+              {getTranslation('footer.company', language, props)}
             </h3>
             <p className="font-paragraph text-base text-primary-foreground/80 leading-relaxed">
-              Tinh tế trong từng đường nét, sang trọng trong từng chi tiết
+              {getTranslation('footer.description', language, props)}
             </p>
             <div className="flex gap-4 pt-2">
               <a
@@ -48,32 +63,32 @@ export default function Footer() {
           {/* Quick Links */}
           <div className="space-y-4">
             <h4 className="font-heading text-xl text-primary-foreground">
-              Liên kết nhanh
+              {getTranslation('footer.quickLinks', language, props)}
             </h4>
             <nav className="flex flex-col gap-3">
               <Link
-                to="/"
+                to={link_home}
                 className="font-paragraph text-base text-primary-foreground/80 hover:text-primary-foreground transition-colors"
               >
-                Trang chủ
+                {getTranslation('footer.home', language, props)}
               </Link>
               <Link
-                to="/products"
+                to={link_products}
                 className="font-paragraph text-base text-primary-foreground/80 hover:text-primary-foreground transition-colors"
               >
-                Sản phẩm
+                {getTranslation('footer.products', language, props)}
               </Link>
               <Link
-                to="/blog"
+                to={link_blogs}
                 className="font-paragraph text-base text-primary-foreground/80 hover:text-primary-foreground transition-colors"
               >
-                Blog
+                {getTranslation('footer.blogs', language, props)}
               </Link>
               <Link
-                to="/about"
+                to={link_about}
                 className="font-paragraph text-base text-primary-foreground/80 hover:text-primary-foreground transition-colors"
               >
-                Giới thiệu
+                {getTranslation('footer.about', language, props)}
               </Link>
             </nav>
           </div>
@@ -81,32 +96,32 @@ export default function Footer() {
           {/* Services */}
           <div className="space-y-4">
             <h4 className="font-heading text-xl text-primary-foreground">
-              Dịch vụ
+              {getTranslation('footer.services', language, props)}
             </h4>
             <nav className="flex flex-col gap-3">
               <Link
-                to="/portfolio"
+                to={link_portfolio}
                 className="font-paragraph text-base text-primary-foreground/80 hover:text-primary-foreground transition-colors"
               >
-                Portfolio
+                {getTranslation('footer.portfolio', language, props)}
               </Link>
               <Link
-                to="/contact"
+                to={link_contact}
                 className="font-paragraph text-base text-primary-foreground/80 hover:text-primary-foreground transition-colors"
               >
-                Liên hệ
+                {getTranslation('footer.contact', language, props)}
               </Link>
               <a
                 href="#shipping"
                 className="font-paragraph text-base text-primary-foreground/80 hover:text-primary-foreground transition-colors"
               >
-                Chính sách vận chuyển
+                {getTranslation('footer.shipping', language, props)}
               </a>
               <a
                 href="#returns"
                 className="font-paragraph text-base text-primary-foreground/80 hover:text-primary-foreground transition-colors"
               >
-                Chính sách đổi trả
+                {getTranslation('footer.returns', language, props)}
               </a>
             </nav>
           </div>
@@ -120,25 +135,25 @@ export default function Footer() {
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary-foreground/80 flex-shrink-0 mt-1" />
                 <p className="font-paragraph text-base text-primary-foreground/80">
-                  123 Đường Thời Trang, Quận 1, TP.HCM
+                  {getTranslation('footer.location', language, props)}
                 </p>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-primary-foreground/80 flex-shrink-0" />
                 <a
-                  href="tel:+84123456789"
+                  href={`tel:${getTranslation('footer.phone', language, props)}`}
                   className="font-paragraph text-base text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                 >
-                  +84 123 456 789
+                  {getTranslation('footer.phone', language, props)}
                 </a>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary-foreground/80 flex-shrink-0" />
                 <a
-                  href="mailto:info@thoitrang.com"
+                  href={`mailto:${getTranslation('footer.email', language, props)}`}
                   className="font-paragraph text-base text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                 >
-                  info@thoitrang.com
+                  {getTranslation('footer.email', language, props)}
                 </a>
               </div>
             </div>
@@ -149,20 +164,20 @@ export default function Footer() {
         <div className="pt-8 border-t border-primary-foreground/20">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="font-paragraph text-sm text-primary-foreground/60">
-              © 2026 Thời Trang. Bản quyền thuộc về chúng tôi.
+              {getTranslation('footer.copyright', language, props)}
             </p>
             <div className="flex gap-6">
               <a
-                href="#privacy"
+                href={link_privacy}
                 className="font-paragraph text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
               >
-                Chính sách bảo mật
+                {getTranslation('footer.privacy', language, props)}
               </a>
               <a
-                href="#terms"
+                href={link_terms}
                 className="font-paragraph text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
               >
-                Điều khoản sử dụng
+                {getTranslation('footer.terms', language, props)}
               </a>
             </div>
           </div>
