@@ -25,10 +25,15 @@ export default function Header(props: AppRouterProps) {
   const langs = [...new Set(props.pages.map((a: Pages) => a.lang))];
   const link_home = navItems.find((a:Pages)=> a.key === 'home' && a.lang === language && a.slug != undefined).slug;
 
-  const isActive = (slug: string) => {
-    const str:string = "/" + slug;
-    //console.log(`location.pathname`, location.pathname, `slug`, slug, location.pathname === str || location.pathname === str + "/");
-    return location.pathname === str || location.pathname === str + "/";
+  const isActive = (page: Pages) => {
+    let str:string = location.pathname.startsWith("/") ? location.pathname.substring(1) : location.pathname;
+    str = str.endsWith("/") ? str.slice(0, -1) : str;
+    let active = page.slug === str;
+    if(!active) {
+      const pageDT = props.pages.find((a:Pages)=> a.slugP === page.slug && a.slug == str);
+      active = pageDT != null;
+    }
+    return active;
   };
 
   return (
@@ -49,7 +54,7 @@ export default function Header(props: AppRouterProps) {
                   onClick={(e) => handlePageLink(e, `/${item.slug}`, navigate)}
                   to={item.slug}
                   className={`font-paragraph text-base transition-colors ${
-                    isActive(item.slug)
+                    isActive(item)
                       ? 'text-linkcolor'
                       : 'text-primary hover:text-linkcolor'
                   }`}
@@ -136,7 +141,7 @@ export default function Header(props: AppRouterProps) {
                     handlePageLink(e, `/${item.slug}`, navigate)
                   }}
                   className={`block font-paragraph text-base py-2 transition-colors ${
-                    isActive(item.slug)
+                    isActive(item)
                       ? 'text-linkcolor'
                       : 'text-primary hover:text-linkcolor'
                   }`}

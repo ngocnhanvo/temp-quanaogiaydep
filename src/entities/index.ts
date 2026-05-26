@@ -14,6 +14,7 @@ export interface Products {
   _updatedDate?: Date;
   itemName?: Record<string, string>;
   slug?: Record<string, string>;
+  slugP?: Record<string, string>;
   itemPrice?: Record<string, number>;
   itemCurrency?: Record<string, string>;
   itemImage?: Record<string, string>;
@@ -76,6 +77,7 @@ export interface Pages {
   id?: string, 
   lang: string,
   slug: string,
+  slugP?: string,
   title: string,
   label: string,
   action: string,

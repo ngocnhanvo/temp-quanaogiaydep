@@ -215,6 +215,7 @@ data_products.map(product => {
       id: product._id,
       lang: p,
       slug: product.slug[p],
+      slugP: product.slugP[p],
       label: `${product.itemName[p] || 'Sản phẩm'}`,
       title: `${companyName[p] || 'Vibe Code Studio'} - The Fusion of AI and Experts`,
       action: 'ProductDetailPage',

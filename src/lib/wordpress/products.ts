@@ -32,6 +32,7 @@ export async function getProducts(infoData: WPInfo, pages: Pages[], isPreview: b
         itemcp = {
           _id: originKey,
           slug: { [lang]: slug },
+          slugP: { [lang]: slugPR.slug },
           itemImage: { [lang]: featuredImage},
           itemName: { [lang]: item.title?.rendered || '' },
           itemDescription: { [lang]: description },
@@ -43,6 +44,7 @@ export async function getProducts(infoData: WPInfo, pages: Pages[], isPreview: b
       }
       else {
         itemcp.slug = { ...itemcp.slug, [lang]: slug };
+        itemcp.slugP = { ...itemcp.slugP, [lang]: slugPR.slug };
         itemcp.itemImage = { ...itemcp.itemImage, [lang]: featuredImage };
         itemcp.itemName = { ...itemcp.itemName, [lang]: item.title?.rendered || '' };
         itemcp.itemDescription = { ...itemcp.itemDescription, [lang]: description };
