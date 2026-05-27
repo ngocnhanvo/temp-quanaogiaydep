@@ -2,7 +2,8 @@ import { formatCurrency } from '@/lib/stringUtils';
 import type { APIRoute } from 'astro';
 
 export const prerender = false;
-const rawBrandUrl = import.meta.env.WC_URL_CLIENT || process.env.WC_URL_CLIENT || '';
+const WC_URL_CLIENT = import.meta.env.WC_URL_CLIENT || process.env.WC_URL_CLIENT || '';
+const RESEND_API_KEY = import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY;
 
 export const POST: APIRoute = async ({ request }) => { // Keep POST export
   try {
@@ -10,10 +11,7 @@ export const POST: APIRoute = async ({ request }) => { // Keep POST export
     const { name, phone, email, items, subtotal, discountAmount, totalPrice, currency, toEmail, companyName, domain, lang } = body;
 
     // Bạn cần cài đặt biến môi trường RESEND_API_KEY trên Cloudflare Dashboard
-    const RESEND_API_KEY = import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY;
     
-    const WC_URL = import.meta.env.WC_URL || process.env.WC_URL;
-    const WC_URL_CLIENT = import.meta.env.WC_URL_CLIENT || process.env.WC_URL_CLIENT;
 
     // const TURNSTILE_SECRET_KEY = import.meta.env.CLOUDFLARE_TURNSTILE_SECRET_KEY || process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY;
     // // 1. Xác thực Cloudflare Turnstile trước khi làm bất cứ việc gì khác
@@ -46,7 +44,7 @@ export const POST: APIRoute = async ({ request }) => { // Keep POST export
     const dict: any = {
       vi: {
         fromEmail: `NV bán hàng<${toEmail}>`,
-        header: "Thông báo đơn hàng đã nhận",
+        header: "Đơn hàng đã được xác nhận",
         greeting: "Xin chào",
         thanks: "Cảm ơn bạn đã tin tưởng đặt hàng tại",
         details: "Dưới đây là chi tiết đơn hàng của bạn:",
@@ -66,7 +64,7 @@ export const POST: APIRoute = async ({ request }) => { // Keep POST export
       },
       en: {
         fromEmail: `Salesperson <${toEmail}>`,
-        header: "Order Confirmation",
+        header: "Your order has been confirmed",
         greeting: "Hello",
         thanks: "Thank you for shopping at",
         details: "Here are your order details:",
@@ -92,7 +90,7 @@ export const POST: APIRoute = async ({ request }) => { // Keep POST export
       <tr>
         <td style="padding: 12px; border-bottom: 1px solid #eee; width: 70px; vertical-align: top;">
           ${item.image 
-            ? `<img src="${rawBrandUrl}/${item.image}" alt="${item.name[lang]}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px; border: 1px solid #eee;" />`
+            ? `<img src="${WC_URL_CLIENT}/${item.image}" alt="${item.name[lang]}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px; border: 1px solid #eee;" />`
             : '<div style="width: 70px; height: 70px; background: #f0f0f0; border-radius: 8px;"></div>'
           }
         </td>

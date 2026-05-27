@@ -14,6 +14,7 @@ export default function Cart(props: AppRouterProps) {
   const [discountCodeInput, setDiscountCodeInput] = useState('');
   const [appliedCode, setAppliedCode] = useState<string | null>(null); // Lưu mã đã áp dụng thành công
   const [discountError, setDiscountError] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [step, setStep] = useState<'cart' | 'checkout' | 'success'>('cart');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -52,12 +53,14 @@ export default function Cart(props: AppRouterProps) {
       setFormData({ fullName: '', phone: '', email: '', note: '', paymentMethod: 'cod' });
       setDiscountCodeInput('');
       setAppliedCode(null);
+      setSubmitError(null);
     }
   }, [isOpen]);
 
   const handleOrderSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(null);
 
     try {
       // Lưu đơn hàng vào collection 'orders'
@@ -79,7 +82,7 @@ export default function Cart(props: AppRouterProps) {
       const companyName = props.data_info?.tencongty || "Vibe Code Studio";
       const domain = props.data_info?.domain || "vibecodestudio.com";
       const currencyStr = removeUnicode(currency);
-      await fetch('/api/cart', {
+      const response = await fetch('/api/cart', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -104,6 +107,10 @@ export default function Cart(props: AppRouterProps) {
         }),
       });
 
+      if (!response.ok) {
+        throw new Error('Failed to send order email');
+      }
+
       setStep('success');
       // Xóa giỏ hàng sau khi đặt hàng thành công
       setTimeout(() => {
@@ -113,6 +120,7 @@ export default function Cart(props: AppRouterProps) {
       }, 500);
     } catch (error) {
       console.error('Order failed:', error);
+      setSubmitError(getTranslation('cart.orderError', language, props) || "Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại sau.");
     } finally {
       setIsSubmitting(false);
     }
@@ -421,6 +429,12 @@ export default function Cart(props: AppRouterProps) {
                     <span className="font-heading text-2xl text-primary">
                       {formatCurrency(totalAfterDiscount, currency)}
                     </span>
+                  </div>
+                )}
+
+                {submitError && (
+                  <div className="p-3 bg-destructive/10 border border-destructive/20 text-destructive text-sm font-paragraph">
+                    {submitError}
                   </div>
                 )}
 
