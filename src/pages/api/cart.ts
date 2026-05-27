@@ -2,6 +2,7 @@ import { formatCurrency } from '@/lib/stringUtils';
 import type { APIRoute } from 'astro';
 
 export const prerender = false;
+const rawBrandUrl = import.meta.env.WC_URL_CLIENT || process.env.WC_URL_CLIENT || '';
 
 export const POST: APIRoute = async ({ request }) => { // Keep POST export
   try {
@@ -90,8 +91,8 @@ export const POST: APIRoute = async ({ request }) => { // Keep POST export
     const itemsHtml = items?.map((item: any) => `
       <tr>
         <td style="padding: 12px; border-bottom: 1px solid #eee; width: 70px; vertical-align: top;">
-          ${item.image?.[lang] 
-            ? `<img src="${item.image[lang]}" alt="${item.name[lang]}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px; border: 1px solid #eee;" />`
+          ${item.image 
+            ? `<img src="${rawBrandUrl}/${item.image}" alt="${item.name[lang]}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px; border: 1px solid #eee;" />`
             : '<div style="width: 70px; height: 70px; background: #f0f0f0; border-radius: 8px;"></div>'
           }
         </td>

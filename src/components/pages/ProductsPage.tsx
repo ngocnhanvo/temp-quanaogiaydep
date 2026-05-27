@@ -143,10 +143,45 @@ export default function ProductsPage(props: AppRouterProps) {
       </section>
 
       {/* Filters Section */}
-      <section className="w-full border-b border-primary/10 bg-background sticky top-[73px] z-30">
-        <div className="max-w-[100rem] mx-auto px-8 md:px-16 lg:px-24 py-6">
-          <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
-            {/* Search */}
+      <section className="w-full border-b border-primary/10 bg-background sticky top-[89px] z-30">
+        <div className="max-w-[100rem] mx-auto px-4 sm:px-8 md:px-16 lg:px-24 py-3 lg:py-6">
+          {/* Mobile Layout (up to lg breakpoint) - Combined Search and Filter in one row */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/50" />
+              <input
+                type="text"
+                placeholder={getTranslation('prods.search.placeholder', language, props)}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-9 pr-4 py-2.5 border border-buttonborder bg-background text-primary font-paragraph text-sm focus:outline-none focus:border-primary transition-colors"
+              />
+            </div>
+
+            <div className="relative shrink-0">
+              <div className={`flex items-center justify-center w-[42px] h-[42px] border transition-all ${
+                selectedCategory !== 'all' 
+                  ? 'bg-primary border-primary text-primary-foreground' 
+                  : 'bg-background border-buttonborder text-primary'
+              }`}>
+                <Filter className="w-5 h-5" />
+              </div>
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer appearance-none"
+              >
+                <option value="all">{getTranslation('prods.filter.all', language, props)}</option>
+                {categories.map(cat => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Desktop Layout (lg breakpoint and up) */}
+          <div className="hidden lg:flex flex-row gap-4 lg:items-center lg:justify-between">
+            {/* Search Input for Desktop */}
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-primary/50" />
               <input
@@ -158,7 +193,7 @@ export default function ProductsPage(props: AppRouterProps) {
               />
             </div>
 
-            {/* Category Filter */}
+            {/* Category Filter Buttons for Desktop */}
             <div className="flex items-center gap-3 flex-wrap">
               <Filter className="w-5 h-5 text-primary" />
               <button

@@ -5,7 +5,7 @@
 export interface ProcessedImageResult {
   src: string;     // Đường dẫn ảnh mặc định (bản lớn nhất hoặc ảnh gốc)
   srcSet: string;
-  srcSets: {};   // Chuỗi srcSet chứa nhiều kích thước phục vụ responsive
+  srcSets: Record<string, string>;   // Chuỗi srcSet chứa nhiều kích thước phục vụ responsive
 }
 
 export interface Products {

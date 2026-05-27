@@ -14,9 +14,9 @@ export async function processAndStoreImage({
   isPreview = false,
 }: ProcessImageOptions): Promise<ProcessedImageResult> {
   // Kết quả mặc định dự phòng nếu gặp lỗi hoặc chạy ở Client
-  const defaultResult: ProcessedImageResult = { src: imageUrl, srcSet: '', srcSets: [] };
+  const defaultResult: ProcessedImageResult = { src: imageUrl, srcSet: '', srcSets: {} };
 
-  if (!imageUrl) return { src: '', srcSet: '', srcSets: [] };
+  if (!imageUrl) return { src: '', srcSet: '', srcSets: {} };
   if (isPreview) return defaultResult;
 
   // Định nghĩa các kích thước chiều rộng (width) bạn muốn phân bổ

@@ -88,7 +88,7 @@ export default function Cart(props: AppRouterProps) {
           email: formData.email,
           lang: language,
           items: items.map(i => ({ 
-            image: i.itemImage,
+            image: i.itemImage[language].srcSets["100"],
             name: i.itemName,
             description: (i as any).itemDescription,
             quantity: i.quantity, 
@@ -312,7 +312,7 @@ export default function Cart(props: AppRouterProps) {
                       <div className="w-24 h-24 flex-shrink-0 bg-secondary">
                         {item.itemImage[language] && (
                           <Image
-                            src={item.itemImage[language]}
+                            src={item.itemImage[language].srcSets["100"]}
                             alt={item.itemName[language]}
                             className="w-full h-full object-cover"
                             width={96}
