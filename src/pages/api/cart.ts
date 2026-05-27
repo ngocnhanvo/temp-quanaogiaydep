@@ -8,16 +8,13 @@ export const POST: APIRoute = async ({ request, locals }) => { // Keep POST expo
   try {
     const runtime = (locals as any).runtime;
     const env = runtime?.env;
-    const WC_URL_CLIENT = import.meta.env.WC_URL_CLIENT || process.env.WC_URL_CLIENT || '';
-    const RESEND_API_KEY = env.RESEND_API_KEY || import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY;
-    
+    const WC_URL_CLIENT = env.WC_URL_CLIENT || import.meta.env.WC_URL_CLIENT || process.env.WC_URL_CLIENT || '';
+    const RESEND_API_KEY = env.RESEND_API_KEY || import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY || '';
+    const TURNSTILE_SECRET_KEY = env.CLOUDFLARE_TURNSTILE_SECRET_KEY || import.meta.env.CLOUDFLARE_TURNSTILE_SECRET_KEY || process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY || '';
+    const WC_URL = env.WC_URL || import.meta.env.WC_URL || process.env.WC_URL || '';
+
     const body = await request.json();
     const { name, phone, email, items, subtotal, discountAmount, totalPrice, currency, toEmail, companyName, domain, lang } = body;
-
-    // Bạn cần cài đặt biến môi trường RESEND_API_KEY trên Cloudflare Dashboard
-    
-
-    // const TURNSTILE_SECRET_KEY = import.meta.env.CLOUDFLARE_TURNSTILE_SECRET_KEY || process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY;
     // // 1. Xác thực Cloudflare Turnstile trước khi làm bất cứ việc gì khác
     // if (TURNSTILE_SECRET_KEY) {
     //   const verifyResponse = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
