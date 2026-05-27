@@ -4,10 +4,12 @@ import type { APIRoute } from 'astro';
 export const prerender = false;
 
 
-export const POST: APIRoute = async ({ request }) => { // Keep POST export
+export const POST: APIRoute = async ({ request, locals }) => { // Keep POST export
   try {
+    const runtime = (locals as any).runtime;
+    const env = runtime?.env;
     const WC_URL_CLIENT = import.meta.env.WC_URL_CLIENT || process.env.WC_URL_CLIENT || '';
-    const RESEND_API_KEY = import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY;
+    const RESEND_API_KEY = env.RESEND_API_KEY || import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY;
     
     const body = await request.json();
     const { name, phone, email, items, subtotal, discountAmount, totalPrice, currency, toEmail, companyName, domain, lang } = body;
