@@ -2,11 +2,13 @@ import { formatCurrency } from '@/lib/stringUtils';
 import type { APIRoute } from 'astro';
 
 export const prerender = false;
-export const WC_URL_CLIENT = import.meta.env.WC_URL_CLIENT || process.env.WC_URL_CLIENT || '';
-export const RESEND_API_KEY = import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY;
+
 
 export const POST: APIRoute = async ({ request }) => { // Keep POST export
   try {
+    const WC_URL_CLIENT = import.meta.env.WC_URL_CLIENT || process.env.WC_URL_CLIENT || '';
+    const RESEND_API_KEY = import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY;
+    
     const body = await request.json();
     const { name, phone, email, items, subtotal, discountAmount, totalPrice, currency, toEmail, companyName, domain, lang } = body;
 
